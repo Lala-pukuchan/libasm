@@ -34,7 +34,13 @@ int main() {
 	// ft_strcpy
 	char *dst = malloc(12);
 	ft_strcpy(dst, str);
-	printf("dst: %s\n", dst);
+	printf("dst: %s\n---\n", dst);
 
+	system("leaks a.out");
 	return (0);
+}
+
+__attribute__((destructor))
+static void destructor() {
+    system("leaks -q a.out");
 }
