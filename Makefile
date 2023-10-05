@@ -1,5 +1,5 @@
 NAME = libasm.a
-SRCS = ft_write.s ft_read.s ft_strlen.s
+SRCS = ft_write.s ft_read.s ft_strlen.s ft_strcpy.s
 OBJS = $(SRCS:.s=.o)
 
 all: $(NAME)
@@ -19,7 +19,7 @@ fclean: clean
 re: fclean all
 
 withMain: $(NAME)
-	gcc -c main.c -o main.o
+	gcc -Wall -Wextra -Werror -c main.c -o main.o
 	gcc main.o -L. -lasm -o test
 
 cleanMain:
