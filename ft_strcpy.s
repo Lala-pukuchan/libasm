@@ -11,5 +11,7 @@ ft_strcpy:
 	inc rax
 	jmp .loop
 .rax_equal:
+	movzx rdx, BYTE [rsi+rax]
+	mov BYTE [rdi+rax], dl
 	mov rax, rdi
 	ret
