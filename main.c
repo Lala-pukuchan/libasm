@@ -6,11 +6,15 @@
 
 extern void ft_write(int fd, const char *buf, size_t count);
 extern ssize_t ft_read(int fd, void *buf, size_t count);
+extern ssize_t ft_strlen(const char *buf);
 
 int main() {
+
+	// ft_write
 	char *str = "Hello World!!!\n";
 	ft_write(1, str, 15);
 
+	// ft_read
 	int fd = open("./test.txt", O_RDONLY);
 	if (fd == -1) {
 		printf("error in opening file.");
@@ -22,6 +26,9 @@ int main() {
 		printf("buf: %s\n", buf);
 		close(fd);
 	}
+
+	// ft_strlen
+	printf("len: %zu\n", ft_strlen(str));
 
 	return (0);
 }
