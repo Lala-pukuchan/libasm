@@ -22,6 +22,10 @@ withMain: $(NAME)
 	gcc -Wall -Wextra -Werror -c main.c -o main.o
 	gcc main.o -L. -lasm -o test
 
+withMainPie: $(NAME)
+	gcc -Wall -Wextra -Werror -fPIE -c main.c -o main.o
+	gcc -pie main.o -L. -lasm -o test
+
 cleanMain:
 	rm -f main.o
 	rm -f test
