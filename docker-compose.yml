@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  ubuntu_14_04_dev:
+    image: ubuntu:14.04
+    container_name: ubuntu_14_04_nasm_container
+    volumes:
+      - ./:/workspace
+    command: /bin/bash -c "while true; do sleep 1000; done"
+    working_dir: /workspace
+
+    entrypoint:
+      - "/bin/bash"
+      - "-c"
+      - |
+        apt-get update && apt-get install -y nasm gcc build-essential && exec /bin/bash -c "trap : TERM INT; sleep infinity & wait"
