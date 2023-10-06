@@ -8,8 +8,9 @@
 extern void ft_write(int fd, const char *buf, size_t count);
 extern ssize_t ft_read(int fd, void *buf, size_t count);
 extern ssize_t ft_strlen(const char *buf);
-char *ft_strcpy(char *dest, const char *src);
-int ft_strcmp(const char *s1, const char *s2);
+extern char *ft_strcpy(char *dest, const char *src);
+extern int ft_strcmp(const char *s1, const char *s2);
+extern char *ft_strdup(const char *s);
 
 int main() {
 
@@ -30,6 +31,7 @@ int main() {
 		printf("\nsize: %zu\n", size);
 		printf("buf: %s\n", buf);
 		close(fd);
+		free(buf);
 	}
 
 	// ft_strlen
@@ -41,6 +43,7 @@ int main() {
 	char *dst = malloc(12);
 	ft_strcpy(dst, str);
 	printf("dst: %s\n---\n", dst);
+	free(dst);
 
 	// ft_strcmp
 	printf("* ft_strcmp\n");
@@ -52,6 +55,14 @@ int main() {
 	char *s4 = "abd";
 	printf("ft_strcmp: %d\n", ft_strcmp(s3, s4));
 	printf("strcmp: %d\n", strcmp(s3, s4));
+
+	// ft_strdup
+	const char *srcDup = "Bonjour le monde!";
+	char *dstFtDup = ft_strdup(srcDup);
+	printf("ft_strdup: %s\n", dstFtDup);
+	char *dstDup = strdup(srcDup);
+	printf("strdup: %s\n", dstDup);
+	free(dstDup);
 
 	system("leaks a.out");
 	return (0);
