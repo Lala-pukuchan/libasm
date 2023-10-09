@@ -88,15 +88,32 @@ int main() {
 	}
 
 	// ft_strcmp
-	printf("* ft_strcmp\n");
+	printf("\n-- *ft_strcmp* --\n");
+	printf("- normal string 1 -\n");
 	char *s1 = "abd";
 	char *s2 = "abc";
-	printf("ft_strcmp: %d\n", ft_strcmp(s1, s2));
-	printf("strcmp: %d\n", strcmp(s1, s2));
+	printf(" ft_strcmp: %d\n", ft_strcmp(s1, s2));
+	printf(" strcmp: %d\n", strcmp(s1, s2));
+	printf("- normal string 2 -\n");
 	char *s3 = "abc";
 	char *s4 = "abd";
-	printf("ft_strcmp: %d\n", ft_strcmp(s3, s4));
-	printf("strcmp: %d\n", strcmp(s3, s4));
+	printf(" ft_strcmp: %d\n", ft_strcmp(s3, s4));
+	printf(" strcmp: %d\n", strcmp(s3, s4));
+	printf("- empty string 1 -\n");
+	char *s5 = "";
+	char *s6 = "";
+	printf(" ft_strcmp: %d\n", ft_strcmp(s5, s6));
+	printf(" strcmp: %d\n", strcmp(s5, s6));
+	printf("- empty string 2 -\n");
+	char *s7 = "a";
+	char *s8 = "";
+	printf(" ft_strcmp: %d\n", ft_strcmp(s7, s8));
+	printf(" strcmp: %d\n", strcmp(s7, s8));
+	printf("- empty string 3 -\n");
+	char *s9 = "";
+	char *s10 = "a";
+	printf(" ft_strcmp: %d\n", ft_strcmp(s9, s10));
+	printf(" strcmp: %d\n", strcmp(s9, s10));
 
 	// ft_strdup
 	const char *srcDup = "Bonjour le monde!";
