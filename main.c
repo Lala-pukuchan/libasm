@@ -35,7 +35,7 @@ int main() {
 	}
 
 	// ft_strlen
-	printf("--* ft_strlen *--\n");
+	printf("\n--* ft_strlen *--\n");
 	printf("- normal string -\n");
 	printf(" ft_strlen: %zu\n", ft_strlen(str));
 	printf(" strlen: %zu\n", ft_strlen(str));
@@ -59,11 +59,33 @@ int main() {
 	}
 
 	// ft_strcpy
-	printf("* ft_strcpy\n");
+	printf("\n--* ft_strcpy *--\n");
+	printf("- normal string -\n");
 	char *dst = malloc(12);
 	ft_strcpy(dst, str);
-	printf("dst: %s\n---\n", dst);
+	printf(" ft_strcpy: %s\n", dst);
+	strcpy(dst, str);
+	printf(" strcpy: %s\n", dst);
 	free(dst);
+	printf("- long string -\n");
+	int fd_dump2 = open("./dump.txt", O_RDONLY);
+	if (fd_dump2 == -1) {
+		printf("error in opening file.");
+		exit(1);
+	} else {
+		char *buf = malloc(10001);
+		read(fd_dump2, buf, 10000);
+		buf[10000] = '\0';
+		char *dst1 = malloc(10001);
+		ft_strcpy(dst1, buf);
+		char *dst2 = malloc(10001);
+		strcpy(dst2, buf);
+		printf(" diff of ft_strcpy and strcpy: %d\n", strcmp(dst1, dst2));
+		close(fd_dump2);
+		free(buf);
+		free(dst1);
+		free(dst2);
+	}
 
 	// ft_strcmp
 	printf("* ft_strcmp\n");
