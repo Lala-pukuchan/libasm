@@ -44,6 +44,13 @@ int main() {
 	printf(" ft_read size: %zu\n", size);
 	printf(" ft_read buf: %s\n", buf_read);
 	free(buf_read);
+	printf("- wrong fd -\n");
+	char *buf_read1 = malloc(3);
+	int size1 = ft_read(3000, buf_read1, 3);
+	printf(" ft_read size: %d\n", size1);
+	int size2 = read(3000, buf_read1, 3);
+	printf(" read size: %d\n", size2);
+	free(buf_read1);
 
 	// ft_strlen
 	printf("\n--* ft_strlen *--\n");
