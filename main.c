@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 extern void ft_write(int fd, const char *buf, size_t count);
 extern ssize_t ft_read(int fd, void *buf, size_t count);
@@ -15,13 +16,29 @@ extern char *ft_strdup(const char *s);
 int main() {
 
 	// ft_write
-	printf("\n--* ft_write *--\n");
-	char *str = "Hello World!";
-	ft_write(1, str, 12);
+	printf("\033[1;33m--* ft_write *--\033[0m\n");
+	printf("- normal string to file -\n");
+	printf("Please see output.txt\n");
+	char *str = "Hello World!\n";
+	int fd_write = open("./output.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd_write == -1) {
+		printf("error in opening file.");
+		exit(1);
+	} else {
+		ft_write(fd_write, str, 13);
+		close(fd_write);
+	}
+	printf("- stdout -\n");
+	ft_write(STDOUT_FILENO, str, 13);
+	printf("- wrong fd -\n");
+	ft_write(3000, str, 13);
+	printf(" >-errno: %d\n", errno);
+	write(3000, str, 13);
+	printf(" >-errno: %d\n", errno);
 
 	// ft_read
-	printf("\n--* ft_read *--\n");
-	printf("- normal string -\n");
+	printf("\033[1;33m--* ft_read *--\033[0m\n");
+	printf("- normal string from file -\n");
 	int fd = open("./test.txt", O_RDONLY);
 	if (fd == -1) {
 		printf("error in opening file.");
@@ -40,7 +57,7 @@ int main() {
 	printf("- stdin -\n");
 	printf("Please input 3 characters\n");
 	char *buf_read = malloc(3);
-	ssize_t size = ft_read(1, buf_read, 3);
+	ssize_t size = ft_read(STDIN_FILENO, buf_read, 3);
 	printf(" ft_read size: %zu\n", size);
 	printf(" ft_read buf: %s\n", buf_read);
 	free(buf_read);
@@ -48,12 +65,14 @@ int main() {
 	char *buf_read1 = malloc(3);
 	int size1 = ft_read(3000, buf_read1, 3);
 	printf(" ft_read size: %d\n", size1);
+	printf(" >-errno: %d\n", errno);
 	int size2 = read(3000, buf_read1, 3);
 	printf(" read size: %d\n", size2);
+	printf(" >-errno: %d\n", errno);
 	free(buf_read1);
 
 	// ft_strlen
-	printf("\n--* ft_strlen *--\n");
+	printf("\033[1;33m--* ft_strlen *--\033[0m\n");
 	printf("- normal string -\n");
 	printf(" ft_strlen: %zu\n", ft_strlen(str));
 	printf(" strlen: %zu\n", ft_strlen(str));
@@ -77,7 +96,7 @@ int main() {
 	}
 
 	// ft_strcpy
-	printf("\n--* ft_strcpy *--\n");
+	printf("\033[1;33m--* ft_strcpy *--\033[0m\n");
 	printf("- normal string -\n");
 	char *dst = malloc(12);
 	ft_strcpy(dst, str);
@@ -92,7 +111,11 @@ int main() {
 		exit(1);
 	} else {
 		char *buf = malloc(10001);
-		read(fd_dump2, buf, 10000);
+		ssize_t bytesRead = read(fd_dump2, buf, 10000);
+		if (bytesRead == -1) {
+			perror("Error reading from file");
+			exit(1);
+		}
 		buf[10000] = '\0';
 		char *dst1 = malloc(10001);
 		ft_strcpy(dst1, buf);
@@ -106,7 +129,7 @@ int main() {
 	}
 
 	// ft_strcmp
-	printf("\n-- *ft_strcmp* --\n");
+	printf("\033[1;33m--* ft_strcmp *--\033[0m\n");
 	printf("- normal string 1 -\n");
 	char *s1 = "abd";
 	char *s2 = "abc";
@@ -134,12 +157,46 @@ int main() {
 	printf(" strcmp: %d\n", strcmp(s9, s10));
 
 	// ft_strdup
+	printf("\033[1;33m--* ft_strdup *--\033[0m\n");
+	printf("- normal string 1 -\n");
 	const char *srcDup = "Bonjour le monde!";
 	char *dstFtDup = ft_strdup(srcDup);
 	printf("ft_strdup: %s\n", dstFtDup);
 	char *dstDup = strdup(srcDup);
 	printf("strdup: %s\n", dstDup);
 	free(dstDup);
+
+	printf("- empty string -\n");
+	const char *srcDup1 = "";
+	char *dstFtDup1 = ft_strdup(srcDup1);
+	printf("ft_strdup: %s\n", dstFtDup1);
+	free(dstFtDup1);
+	char *dstDup1 = strdup(srcDup1);
+	printf("strdup: %s\n", dstDup1);
+	free(dstDup1);
+	
+	printf("- long string -\n");
+	int fd_dump3 = open("./dump.txt", O_RDONLY);
+	if (fd_dump3 == -1) {
+		printf("error in opening file.");
+		exit(1);
+	} else {
+		char *buf = malloc(10001);
+		ssize_t bytesRead = read(fd_dump3, buf, 10000);
+		if (bytesRead == -1) {
+			perror("Error reading from file");
+			exit(1);
+		}
+		buf[10000] = '\0';
+		char *dstFtDup1 = ft_strdup(buf);
+		printf("ft_strdup: %zu\n", strlen(dstFtDup1));
+		free(dstFtDup1);
+		char *dstDup1 = strdup(buf);
+		printf("strdup: %zu\n", strlen(dstDup1));
+		free(dstDup1);
+		free(buf);
+		close(fd_dump3);
+	}
 
 	system("leaks a.out");
 	return (0);
