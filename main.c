@@ -35,8 +35,28 @@ int main() {
 	}
 
 	// ft_strlen
-	printf("*ft_strlen\n");
-	printf("len: %zu\n", ft_strlen(str));
+	printf("--* ft_strlen *--\n");
+	printf("- normal string -\n");
+	printf(" ft_strlen: %zu\n", ft_strlen(str));
+	printf(" strlen: %zu\n", ft_strlen(str));
+	printf("- empty string -\n");
+	char *emp = "";
+	printf(" ft_strlen: %zu\n", ft_strlen(emp));
+	printf(" strlen: %zu\n", ft_strlen(emp));
+	printf("- long string -\n");
+	int fd_dump = open("./dump.txt", O_RDONLY);
+	if (fd_dump == -1) {
+		printf("error in opening file.");
+		exit(1);
+	} else {
+		char *buf = malloc(10001);
+		read(fd_dump, buf, 10000);
+		buf[10000] = '\0';
+		printf(" ft_strlen: %zu\n", ft_strlen(buf));
+		printf(" strlen: %zu\n", ft_strlen(buf));
+		close(fd_dump);
+		free(buf);
+	}
 
 	// ft_strcpy
 	printf("* ft_strcpy\n");
