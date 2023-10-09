@@ -15,12 +15,13 @@ extern char *ft_strdup(const char *s);
 int main() {
 
 	// ft_write
-	printf("* ft_write\n");
+	printf("\n--* ft_write *--\n");
 	char *str = "Hello World!";
 	ft_write(1, str, 12);
 
 	// ft_read
-	printf("* ft_read\n");
+	printf("\n--* ft_read *--\n");
+	printf("- normal string -\n");
 	int fd = open("./test.txt", O_RDONLY);
 	if (fd == -1) {
 		printf("error in opening file.");
@@ -28,11 +29,21 @@ int main() {
 	} else {
 		char *buf = malloc(3);
 		ssize_t size = ft_read(fd, buf, 3);
-		printf("\nsize: %zu\n", size);
-		printf("buf: %s\n", buf);
+		printf(" ft_read size: %zu\n", size);
+		printf(" ft_read buf: %s\n", buf);
+		ssize_t size1 = read(fd, buf, 3);
+		printf(" read size: %zu\n", size1);
+		printf(" read buf: %s\n", buf);
 		close(fd);
 		free(buf);
 	}
+	printf("- stdin -\n");
+	printf("Please input 3 characters\n");
+	char *buf_read = malloc(3);
+	ssize_t size = ft_read(1, buf_read, 3);
+	printf(" ft_read size: %zu\n", size);
+	printf(" ft_read buf: %s\n", buf_read);
+	free(buf_read);
 
 	// ft_strlen
 	printf("\n--* ft_strlen *--\n");
