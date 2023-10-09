@@ -2,6 +2,7 @@ global ft_strdup
 extern ft_strlen
 extern malloc
 extern ft_strcpy
+extern __errno_location
 
 section .text
 ft_strdup:
@@ -18,6 +19,8 @@ ft_strdup:
     ret
 
 .fail_malloc:
+    call __errno_location
+    mov DWORD [rax], 12
     xor rax, rax
     ret
 

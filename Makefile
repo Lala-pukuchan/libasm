@@ -27,7 +27,7 @@ withMainPie: $(NAME)
 	gcc -pie main.o -L. -lasm -o test
 
 cleanMain:
-	rm -f main.o
+	rm -f main.o output.txt
 	rm -f test
 
 .PHONY: all clean fclean re withMain

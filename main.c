@@ -158,7 +158,7 @@ int main() {
 
 	// ft_strdup
 	printf("\033[1;33m--* ft_strdup *--\033[0m\n");
-	printf("- normal string 1 -\n");
+	printf("- normal string -\n");
 	const char *srcDup = "Bonjour le monde!";
 	char *dstFtDup = ft_strdup(srcDup);
 	printf("ft_strdup: %s\n", dstFtDup);
